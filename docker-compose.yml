@@ -11,5 +11,23 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
 
+  dev-server:
+    container_name: dev
+    build:
+      context: front
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./front:/app
+
+  front:
+    container_name: front
+    build:
+      context: front
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
 volumes:
   mongo-data:
