@@ -6,5 +6,5 @@
 	export let data: LayoutData;
 </script>
 
-<Navbar />
+<Navbar email={data.email} />
 <slot />

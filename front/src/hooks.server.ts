@@ -22,7 +22,7 @@ export const handle = (async ({ event, resolve }) => {
 
 		if (user) {
 			// set user in session
-			event.locals.user = user.email;
+			event.locals.email = user.email;
 		}
 	}
 

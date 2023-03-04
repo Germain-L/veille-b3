@@ -5,7 +5,7 @@ declare namespace App {
 	// interface Error {}
 	interface Locals {
 		db: Db;
-		user: string | null;
+		email: string | null;
 	}
 	// interface PageData {}
 	// interface Platform {}
