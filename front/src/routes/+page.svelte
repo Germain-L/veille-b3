@@ -1,2 +1,18 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import AuthForm from '$lib/components/AuthForm.svelte';
+	import type { ActionData, PageServerData } from './$types';
+
+	export let form: ActionData;
+	export let data: PageServerData;
+</script>
+
+<h1 class="text-3xl font-bold underline">Hello world!</h1>
+
+{#if data.user}
+	<!-- content here -->
+	<p>{data.user}</p>
+{:else}
+	<div class="w-4/12">
+		<AuthForm {form} />
+	</div>
+{/if}
