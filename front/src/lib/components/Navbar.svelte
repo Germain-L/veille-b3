@@ -10,6 +10,7 @@
 		<ul class="flex items-center space-x-10">
 			<li class="align-middle"><a href="/profile" class="hover:text-gray-300">Profile</a></li>
 			{#if email}
+				<li><a href="/filter">Filter</a></li>
 				<li>
 					<form action="/auth?/logout" method="POST">
 						<button

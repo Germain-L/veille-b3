@@ -18,7 +18,8 @@ for article in articles:
     souped.append({
         "title": article.title,
         "content": BeautifulSoup(article.content[0].value, "html.parser").get_text(),
-        "link": article.link
+        "link": article.link,
+        "saved": False
     })
 
 
