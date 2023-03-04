@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { JWT } from '$env/static/private';
 import { v4 as uuidv4 } from 'uuid';
+import { redirect } from '@sveltejs/kit';
 
 
 export const load = (async ({ locals }) => {
@@ -73,5 +74,14 @@ export const actions: Actions = {
 		}
 
 		return { status: 201 };
+	},
+	logout: async ({ locals, cookies }) => {
+		console.log('logout');
+		
+		locals.user = null;
+		cookies.delete('token');
+		cookies.delete('refreshToken');
+
+		throw redirect(301, '/');
 	}
 };

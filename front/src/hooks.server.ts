@@ -16,9 +16,6 @@ export const handle = (async ({ event, resolve }) => {
 	const parsedCookies = cookie.parse(cookies || '');
 	const refreshToken = parsedCookies.refreshToken;
 
-
-	console.log('parsedCookies', parsedCookies);
-
 	if (refreshToken) {
 		// get user
 		const user = await db.collection('users').findOne({ refreshToken });
