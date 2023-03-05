@@ -4,6 +4,11 @@
 	export let form: ActionData;
 </script>
 
+<!-- change page title -->
+<svelte:head>
+	<title>Veille B3 - Auth</title>
+</svelte:head>
+
 <div class="">
 	<form action="?/login" method="POST" class="flex flex-col space-y-4" id="login-form">
 		<label for="email" class="font-medium text-gray-700">Email</label>

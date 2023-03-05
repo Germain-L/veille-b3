@@ -5,6 +5,10 @@
 	export let form: ActionData;
 </script>
 
+<svelte:head>
+	<title>Veille B3 - Filter</title>
+</svelte:head>
+
 <div class="flex flex-col space-y-4">
 	{#each data.articles as article}
 		<ArticleFitler {article} {form} />
