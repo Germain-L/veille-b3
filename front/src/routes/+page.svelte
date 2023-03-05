@@ -1,8 +1,11 @@
 <script lang="ts">
-	import type { ActionData, PageServerData } from './$types';
-
-	export let form: ActionData;
-	export let data: PageServerData;
+	import ArticleDisplay from '$lib/components/ArticleDisplay.svelte';
+	import type { PageData } from './$types';
+	export let data: PageData;
 </script>
 
-<p class="text-3xl">Veille tech</p>
+<div class="flex flex-col space-y-4">
+	{#each data.articles as article}
+		<ArticleDisplay {article} />
+	{/each}
+</div>

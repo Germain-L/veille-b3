@@ -5,4 +5,5 @@ export interface Article {
     summary: string;
     link: string;
     saved: boolean;
+    savedBy: string[];
 }

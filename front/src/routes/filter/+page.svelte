@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { PageData } from './$types';
-
+	import ArticleFitler from '$lib/components/ArticleFitler.svelte';
+	import type { ActionData, PageData } from './$types';
 	export let data: PageData;
+	export let form: ActionData;
 </script>
 
-{#each data.articles as article}
-	<div class="flex flex-col space-y-4">
-		<h2 class="text-2xl font-bold">{article.title}</h2>
-		<p class="text-gray-700">{article.summary}</p>
-	</div>
-{/each}
+<div class="flex flex-col space-y-4">
+	{#each data.articles as article}
+		<ArticleFitler {article} {form} />
+	{/each}
+</div>

@@ -1,6 +1,7 @@
 import type { Handle } from '@sveltejs/kit';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import cookie from 'cookie';
+import type { User } from '$lib/models/user';
 
 export const handle = (async ({ event, resolve }) => {
 	const mongodb = await MongoClient.connect('mongodb://root:example@localhost:27017', {});
@@ -18,11 +19,20 @@ export const handle = (async ({ event, resolve }) => {
 
 	if (refreshToken) {
 		// get user
-		const user = await db.collection('users').findOne({ refreshToken });
+		const userFromMongo = await db.collection('users').findOne({ refreshToken });
 
-		if (user) {
-			// set user in session
-			event.locals.email = user.email;
+		if (userFromMongo) {
+			
+			const user = {
+				_id: userFromMongo._id.toString(),
+				username: userFromMongo.username,
+				email: userFromMongo.email,
+				admin: userFromMongo.admin,
+				password: userFromMongo.password,
+				refreshToken: userFromMongo.refreshToken
+			} as User;
+
+			event.locals.user = user;
 		}
 	}
 

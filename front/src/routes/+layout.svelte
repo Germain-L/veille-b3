@@ -6,5 +6,7 @@
 	export let data: LayoutData;
 </script>
 
-<Navbar email={data.email} />
-<slot />
+<div class="mx-2 md:mx-32">
+	<Navbar loggedIn={data.user ? true : false} />
+	<slot />
+</div>

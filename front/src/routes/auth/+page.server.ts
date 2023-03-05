@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { JWT } from '$env/static/private';
 import { v4 as uuidv4 } from 'uuid';
 import { redirect } from '@sveltejs/kit';
+import type { User } from '$lib/models/user';
 
 export const load = (async () => {
 	return {};
@@ -22,7 +23,7 @@ export const actions: Actions = {
 		// get user
 		const db = locals.db;
 
-		const user = await db.collection('users').findOne({ email });
+		const user = await db.collection('users').findOne({ email }) as User;
 
 		if (!user) {
 			return { status: 401, error: 'User not found' };
@@ -36,10 +37,11 @@ export const actions: Actions = {
 		}
 
 		// set user in session
-		locals.email = user.email;
+		locals.user = user;
 
 		const token = jwt.sign({ email: user.email }, JWT, { expiresIn: '1h' });
 		const refreshToken = uuidv4();
+		
 		await db.collection('users').updateOne({ email: user.email }, { $set: { refreshToken } });
 
 		cookies.set('token', token, { httpOnly: true });
@@ -60,7 +62,7 @@ export const actions: Actions = {
 		const user = {
 			email,
 			password: hash
-		};
+		} as User;
 
 		const db = locals.db;
 
@@ -73,7 +75,9 @@ export const actions: Actions = {
 		return { status: 201 };
 	},
 	logout: async ({ locals, cookies }) => {
-		locals.email = null;
+		console.log('logout');
+		
+		locals.user = null;
 
 		cookies.delete('token');
 		cookies.delete('refreshToken');
