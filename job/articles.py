@@ -2,12 +2,16 @@ import feedparser
 from bs4 import BeautifulSoup
 from transformers import T5Tokenizer, T5ForConditionalGeneration, pipeline
 import pymongo
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-client = pymongo.MongoClient("mongodb://root:example@localhost:27017/")
+mongo_url = os.getenv("MONGO_URL")
+
+client = pymongo.MongoClient(mongo_url)
 
 db = client["veille"]
 collection = db["articles"]
-
 
 feed = feedparser.parse("https://azure.microsoft.com/fr-fr/blog/feed/")
 articles = feed.entries
@@ -33,7 +37,7 @@ for i in range(len(souped)):
         try:
             souped[i]["summary"] = tokenizer(souped[i]["content"],
                                              max_length=60, min_length=40)[0]["summary_text"]
-            
+
         except IndexError:
             # catch the exception and continue
             collection.insert_many
