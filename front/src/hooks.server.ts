@@ -1,10 +1,11 @@
 import type { Handle } from '@sveltejs/kit';
-import { MongoClient, ObjectId } from 'mongodb';
+import { MongoClient } from 'mongodb';
 import cookie from 'cookie';
 import type { User } from '$lib/models/user';
+import { MONGO_URL } from '$env/static/private';
 
 export const handle = (async ({ event, resolve }) => {
-	const mongodb = await MongoClient.connect('mongodb://root:example@localhost:27017', {});
+	const mongodb = await MongoClient.connect(MONGO_URL, {});
 	await mongodb.connect();
 
 	const db = mongodb.db('veille');
@@ -22,7 +23,6 @@ export const handle = (async ({ event, resolve }) => {
 		const userFromMongo = await db.collection('users').findOne({ refreshToken });
 
 		if (userFromMongo) {
-			
 			const user = {
 				_id: userFromMongo._id.toString(),
 				username: userFromMongo.username,
