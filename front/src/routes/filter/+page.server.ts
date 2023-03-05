@@ -14,10 +14,6 @@ export const load = (async ({ locals, parent }) => {
 	// get articles not saved
 	const articles = (await db.collection('articles').find({ saved: false }).toArray()) as Article[];
 
-
-	console.log('articles', articles);
-	
-
 	const articlesWithIdAsString = articles.map((article: Article) => ({
 		...article,
 		_id: article._id.toString()
